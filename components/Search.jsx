@@ -13,7 +13,7 @@ export default function Search() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    router.push(`?search=${input}`);
+    router.push(input? `?search=${input}`: '/');
   };
 
   return (

@@ -16,18 +16,19 @@ export default async function Countries({ query }) {
     <div className="grid gap-14 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {data.map((x) => {
         return (
-          <div key={x.name.official} className="bg-[var(--n6)] shadow-md">
-            <div className="aspect-video overflow-hidden relative">
-              <Image src={x.flags.png} fill={true} alt="/" />
+          <Link href={`/${x.name.official}`} key={x.name.official}>
+            <div  className="bg-[var(--n6)] shadow-md">
+              <div className="aspect-video overflow-hidden relative">
+                <Image src={x.flags.png} fill={true} alt="/" />
+              </div>
+              <div className="p-5">
+                <h1 className="font-bold text-lg">{x.name.common}</h1>
+                <p>Population: {x.population}</p>
+                <p>Region: {x.region}</p>
+                <p>Capital: {x.capital}</p>
+              </div>
             </div>
-            <div className="p-5">
-              <h1 className="font-bold text-lg">{x.name.common}</h1>
-              <p>Population: {x.population}</p>
-              <p>Region: {x.region}</p>
-              <p>Capital: {x.capital}</p>
-              <Link href={`/${x.name.official}`}>{x.name.official}</Link>
-            </div>
-          </div>
+          </Link>
         );
       })}
     </div>
