@@ -78,7 +78,7 @@ export default async function Country({params}) {
           <div>
             {country.borders && <h1 className="font-bold text-xl mb-4">Border Countries:</h1>}
             {country.borders &&
-              <div className='flex gap-3 flex-wrap max-w-x s'>
+              <div className='flex gap-3 flex-wrap max-w-xs'>
                 {country.borders.map(border => {
                 return <div key={border} className='px-6 py-1 shadow-md border'>{border}</div>
                 })}

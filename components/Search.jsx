@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { SearchIcon } from 'lucide-react';
 
 export default function Search() {
   const [input, setInput] = useState('');
@@ -18,8 +19,10 @@ export default function Search() {
 
   return (
     <div className="bg-[var(--n6)] px-9 py-4 shadow-md max-w-[500px] rounded-md">
-      <form onSubmit={handleSubmit} className="flex gap-5">
-        <button type="submit">(search btn)</button>
+      <form onSubmit={handleSubmit} className="flex gap-8 items-center">
+        <button type="submit">
+          <SearchIcon size={20} color='#949494'/>
+        </button>
         <input
           type="text"
           placeholder="Search for a country..."
