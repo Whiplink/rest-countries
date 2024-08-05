@@ -1,29 +1,14 @@
-'use client'
-import { Moon } from 'lucide-react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useState } from 'react'
+import { Moon, Sun } from "lucide-react";
+import { setDarkTheme } from "@/actions";
 
-export default function DarkModeBtn() {
-  const [darkmode, setDarkmode] = useState(false)
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const getSearch = searchParams.get('search')
-  const getDm = searchParams.get('dm')
-
-  const search = getSearch? `search=${getSearch}`:''
-  const dm = getDm? '':`dm=true`
-
-
-  const handleBtn = () => {
-    setDarkmode((prev) => !prev)
-
-    // router.push(`?${[search,dm].join('&')}`)
-  }
+export default function DarkModeBtn({ darkTheme }) {
+  const text = darkTheme.value === "true" ? "Light" : "Dark";
   return (
-    <button onClick={handleBtn} className="flex items-center gap-3">
-      <Moon size={18}/>
-      <p>Dark Mode</p>
-      <p>{darkmode? "yes": "no"}</p>
-    </button>
-  )
+    <form action={setDarkTheme}>
+      <button type="submit" className="flex items-center gap-3">
+        {darkTheme.value === "true" ? <Sun size={18} /> : <Moon size={18} />}
+        <p>{text} Mode</p>
+      </button>
+    </form>
+  );
 }

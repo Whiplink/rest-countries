@@ -1,15 +1,35 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import { cookies } from "next/headers";
+import Image from "next/image";
+import Link from "next/link";
 
-export default async function Countries({ query }) {
+export default async function Countries({ search, filter }) {
   let data;
+  const path = search ? `name/${search}` : "all";
   try {
-    const string = query ? `name/${query}` : 'all';
-    const fetchData = await fetch(`https://restcountries.com/v3.1/${string}`);
+    const fetchData = await fetch(`https://restcountries.com/v3.1/${path}`);
     const res = await fetchData.json();
-    data = res?.slice(0, 8);
+    if (filter) {
+      data = await res.filter((x) => x.region === filter);
+      data = await data?.slice(0, 8);
+    } else {
+      data = await res?.slice(0, 8);
+    }
   } catch (e) {
     data = [];
+  }
+
+  const cookieStore = cookies();
+  const darkTheme = cookieStore.get("darkTheme");
+  const bg = darkTheme?.value === "true" ? "bg-[var(--n1)]" : "bg-[var(--n6)]";
+  const color =
+    darkTheme?.value === "true" ? "text-[var(--n6)]" : "text-[var(--n3)]";
+
+  if (data.length === 0) {
+    return (
+      <div className={`${color}`}>
+        <p>No result.</p>
+      </div>
+    );
   }
 
   return (
@@ -17,7 +37,7 @@ export default async function Countries({ query }) {
       {data.map((x) => {
         return (
           <Link href={`/${x.name.official}`} key={x.name.official}>
-            <div  className="bg-[var(--n6)] shadow-md">
+            <div className={`${bg} ${color} shadow-md rounded overflow-hidden`}>
               <div className="aspect-video overflow-hidden relative">
                 <Image src={x.flags.png} fill={true} alt="/" />
               </div>
